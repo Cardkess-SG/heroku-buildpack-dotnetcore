@@ -153,6 +153,7 @@ find -maxdepth 1 ! -name Procfile ! -name .profile.d ! -name .apt ! -name .dotne
 if [[ ! -z "$APP_ASSEMBLY" ]]; then
 # Create procfile and Add process type to that 
 cat << EOT >> ${BUILD_DIR}/Procfile
+	release: cd \$HOME/$RELEASE_DIR && dotnet ef database update
 	web: cd \$HOME/$RELEASE_DIR && dotnet "./$APP_ASSEMBLY.dll" --urls http://+:\$PORT
 EOT
 fi
