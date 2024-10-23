@@ -30,5 +30,6 @@ if [[ ! -f $BUILD_DIR/Procfile ]]; then
 cat <<EOF
 default_process_types:
 EOF
+echo "  release: cd \$HOME/$RELEASE_DIR && dotnet ef database update --startup-project ..\HADV.OMS.CentralAPI --context AppDbContext"
 echo "  web: cd \$HOME/$RELEASE_DIR && dotnet \"./${APP_ASSEMBLY}.dll\" --urls http://+:\$PORT"
 fi
