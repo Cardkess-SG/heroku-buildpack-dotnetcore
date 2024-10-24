@@ -157,7 +157,7 @@ find -maxdepth 1 ! -name Procfile ! -name .profile.d ! -name .apt ! -name .dotne
 if [[ ! -z "$APP_ASSEMBLY" ]]; then
 # Create procfile and Add process type to that 
 cat << EOT >> ${BUILD_DIR}/Procfile
-    release: cd \$BUILD_DIR && dotnet new tool-manifest && dotnet tool install dotnet-ef --version 8.* && export PATH="$PATH:/app/.dotnet/tools" && dotnet tool run dotnet-ef migrations list --startup-project $APP_ASSEMBLY --context AppDbContext
+    release: cd \$BUILD_DIR && ls && dotnet new tool-manifest && dotnet tool install dotnet-ef --version 8.* && export PATH="$PATH:/app/.dotnet/tools" && dotnet tool run dotnet-ef migrations list --startup-project $APP_ASSEMBLY --context AppDbContext
 	web: cd \$HOME/$RELEASE_DIR && dotnet "./$APP_ASSEMBLY.dll" --urls http://+:\$PORT
 EOT
 fi
