@@ -145,6 +145,7 @@ else
 	dotnet tool install dotnet-ef --version 8.*
 	export PATH="$PATH:/app/.dotnet/tools"
 	dotnet tool run dotnet-ef migrations list --startup-project $APP_ASSEMBLY --context AppDbContext
+	dotnet tool run dotnet-ef database update --startup-project $APP_ASSEMBLY --context AppDbContext
 	# https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish?tabs=netcore21
 	# dotnet publish [<Solution>]
 	dotnet publish $SOLUTION_FILE --output $BUILD_DIR/$RELEASE_DIR --configuration Release --runtime linux-x64 --no-self-contained
