@@ -141,6 +141,7 @@ else
 	RELEASE_DIR="${SOLUTION_NAME}_Release"
 	echo "export RELEASE_DIR=\"${SOLUTION_NAME}_Release\"" >> $PROFILE_PATH
 	cd $BUILD_DIR
+	echo "ls"
 	dotnet tool install --global dotnet-ef --version 8.*
 	dotnet ef migrations list --startup-project ./HADV.OMS.CentralAPI --context AppDbContext
 	# https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish?tabs=netcore21
