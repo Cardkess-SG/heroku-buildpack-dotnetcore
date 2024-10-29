@@ -141,23 +141,22 @@ else
 	RELEASE_DIR="${SOLUTION_NAME}_Release"
 	echo "export RELEASE_DIR=\"${SOLUTION_NAME}_Release\"" >> $PROFILE_PATH
 	cd $BUILD_DIR
-	# dotnet new tool-manifest
-	# dotnet tool install dotnet-ef --version 8.*
-	# export PATH="$PATH:/app/.dotnet/tools"
-	# dotnet tool run dotnet-ef migrations list --startup-project $APP_ASSEMBLY --context AppDbContext
-	# dotnet tool run dotnet-ef database update --startup-project $APP_ASSEMBLY --context AppDbContext
+	dotnet new tool-manifest
+	dotnet tool install dotnet-ef --version 8.*
+	export PATH="$PATH:/app/.dotnet/tools"
+	dotnet tool run dotnet-ef migrations list --startup-project $APP_ASSEMBLY --context AppDbContext
+	dotnet tool run dotnet-ef database update --startup-project $APP_ASSEMBLY --context AppDbContext
 	# https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish?tabs=netcore21
 	# dotnet publish [<Solution>]
 	dotnet publish $SOLUTION_FILE --output $BUILD_DIR/$RELEASE_DIR --configuration Release --runtime linux-x64 --no-self-contained
 fi
 
 # Remove src files in production machine
-# find -maxdepth 1 ! -name Procfile ! -name .profile.d ! -name .apt ! -name .dotnet ! -name .heroku ! -name node_modules ! -name $RELEASE_DIR  -exec rm -rv {} \; > /dev/null 2>&1;
+find -maxdepth 1 ! -name Procfile ! -name .profile.d ! -name .apt ! -name .dotnet ! -name .heroku ! -name node_modules ! -name $RELEASE_DIR  -exec rm -rv {} \; > /dev/null 2>&1;
 
 if [[ ! -z "$APP_ASSEMBLY" ]]; then
 # Create procfile and Add process type to that 
 cat << EOT >> ${BUILD_DIR}/Procfile
-    release: cd \$BUILD_DIR && ls && dotnet new tool-manifest && dotnet tool install dotnet-ef --version 8.* && export PATH="$PATH:/app/.dotnet/tools" && dotnet tool run dotnet-ef migrations list --startup-project $APP_ASSEMBLY --context AppDbContext
-	web: cd \$HOME/$RELEASE_DIR && dotnet "./$APP_ASSEMBLY.dll" --urls http://+:\$PORT
+    web: cd \$HOME/$RELEASE_DIR && dotnet "./$APP_ASSEMBLY.dll" --urls http://+:\$PORT
 EOT
 fi
