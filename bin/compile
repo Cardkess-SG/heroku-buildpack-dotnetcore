@@ -142,7 +142,7 @@ else
 	echo "export RELEASE_DIR=\"${SOLUTION_NAME}_Release\"" >> $PROFILE_PATH
 	cd $BUILD_DIR
 	dotnet new tool-manifest
-	dotnet tool install dotnet-ef --version 8.*
+	dotnet tool install dotnet-ef --version 9.*
 	export PATH="$PATH:/app/.dotnet/tools"
 	dotnet tool run dotnet-ef migrations list --startup-project $APP_ASSEMBLY --context AppDbContext
 	dotnet tool run dotnet-ef database update --startup-project $APP_ASSEMBLY --context AppDbContext
